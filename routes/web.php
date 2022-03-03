@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/projects/{project}', [ProjectsController::class, 'show']);
+
 Route::get('/projects', [ProjectsController::class, 'index']);
 
 Route::post('/projects', [ProjectsController::class, 'store']);

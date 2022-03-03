@@ -85,7 +85,7 @@ services:
     phpmyadmin:
         image: phpmyadmin:latest
         ports:
-            - 8081:80
+            - 8082:80
         environment:
             PMA_HOSTS: "mysql"
         networks:
