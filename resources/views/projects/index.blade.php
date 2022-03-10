@@ -1,18 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-centered">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight" style="margin-right: auto;">
-        Birdboard
-        </h2>
-        <a href="/projects/create">Create</a>
-        </div>
+        Dashboard
     </x-slot>
 
-    <ul>
-        @foreach($projects as $project)
-        <li>
-            <a href="{{ $project->path() }}">{{ $project->title }}</a>
-        </li>
-        @endforeach
-    </ul>
+
+    <div class="flex">
+    @forelse($projects as $project)
+        <div class="bg-white mr-4 rounded shadow w-1/3 p-4" style="height:200px">
+            <h3 class="font-normal text-xl py-4">{{ $project->title }}</h3>
+            <div class="text-sm text-slate-400">{{ Str::limit($project->description, 100) }}</div>
+        </div>
+    @empty
+        <div>No Projects Yet</div>
+    @endforelse
+    </div>
+
 </x-app-layout>
