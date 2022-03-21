@@ -7,5 +7,5 @@
 }
 
 .card {
-    @apply bg-white p-5 shadow-lg rounded-lg overflow-hidden;
+    @apply bg-white p-5 shadow-lg rounded-lg overflow-hidden mb-4;
 }

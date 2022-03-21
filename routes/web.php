@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\ProjectsTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects/{project}', [ProjectsController::class, 'show']);
 
     Route::post('/projects', [ProjectsController::class, 'store']);
-    Route::post('/projects/{project}/tasks', [ProjectsController::class, 'store']);
+    Route::post('/projects/{project}/tasks', [ProjectsTaskController::class, 'store']);
 });
 
 
