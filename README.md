@@ -6,3 +6,8 @@ This series will give us a wide range of opportunities to pull up our sleeves an
 
  ## Run tests
  ./vendor/bin/sail artisan test
+
+## Testing
+alias v="./vendor/bin/sail"
+
+v artisan test --filter ***
