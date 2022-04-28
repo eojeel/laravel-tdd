@@ -23,7 +23,7 @@ class ProjectsController extends Controller
 
         $project = auth()->user()->projects()->create($attributes);
 
-        return redirect('/projects', $project->path());
+        return redirect($project->path());
     }
 
     public function show(Project $project)

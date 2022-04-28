@@ -14,12 +14,21 @@
                     <h2 class="text-grey text-sm font-normal text-lg">Tasks</h2>
 
                     @forelse($project->tasks as $task)
-                    <div class="card">{{ $task->body }}</div>
+                    <div class="card mb-3">
+                        <form action="{{ $project->path() . '/tasks/' . $task->id }}" method="POST">
+                            @method('PATCH')
+                            @csrf
+                            <div class="flex">
+                                <input name="body" value="{{ $task->body }}" class="w-full  {{ $task->completed ? 'text-gray' : ' ' }}">
+                                <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
+                            </div>
+                        </form>
+                    </div>
                     @empty
                     <div class="card">No tasks yet</div>
                     @endforelse
                     <div class="card mb-3">
-                        <form action="{{ $project->path() . '/tasks' }}" method="POST">
+                        <form action="{{ $task->path() }}" method="POST">
                             @csrf
                             <input type="text" name="body" class="w-full" placeholder="Add a new task...">
                     </div>

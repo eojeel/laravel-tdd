@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('project_id');
             $table->string('body');
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }
