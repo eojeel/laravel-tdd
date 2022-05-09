@@ -29,15 +29,46 @@ class ProjectsTest extends TestCase
 
         $this->signIn();
 
+        $this->get('/projects/create')->assertStatus(200);
+
         $attributes = [
             'title' => $this->faker->sentence(),
-            'description' => $this->faker->paragraph()
+            'description' => $this->faker->sentence(),
+            'notes' => 'General notes'
         ];
 
-        $this->post('/projects', $attributes);
+        $response = $this->post('/projects', $attributes);
+
+        $project = Project::where($attributes)->first();
+
+        $response->assertRedirect($project->path());
 
         $this->assertDatabaseHas('projects', $attributes);
+
+        $this->get($project->path())
+        ->assertSee($attributes['title'])
+        ->assertSee($attributes['notes'])
+        ->assertSee($attributes['description']);
     }
+
+
+    public function test_a_user_can_update_a_project()
+    {
+        $this->signIn();
+
+        $this->withoutExceptionHandling();
+
+        $project = Project::factory()->create(['owner_id' => auth()->id()]);
+
+        $this->patch($project->path(), [
+            'notes' => 'changed'
+        ])->assertRedirect($project->path());
+
+        $this->assertDatabaseHas('projects', [
+            'notes' => 'changed'
+        ]);
+    }
+
 
     public function test_a_project_requires_a_title()
     {
@@ -84,5 +115,14 @@ class ProjectsTest extends TestCase
         $project = Project::factory()->create();
 
         $this->get($project->path())->assertStatus(403);
+    }
+
+    public function test_an_authenticated_user_cannot_update_the_projectes_from_others()
+    {
+        $this->signIn();
+
+        $project = Project::factory()->create();
+
+        $this->patch($project->path(), [])->assertStatus(403);
     }
 }

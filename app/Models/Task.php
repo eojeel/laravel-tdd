@@ -11,6 +11,7 @@ class Task extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $touches = ['project'];
 
     public function project()
     {
@@ -22,4 +23,5 @@ class Task extends Model
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
     }
+
 }
