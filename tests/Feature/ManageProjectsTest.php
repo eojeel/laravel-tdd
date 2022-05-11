@@ -20,7 +20,6 @@ class ProjectsTest extends TestCase
         $this->post('/projects', $project->toArray())->assertRedirect('login');
         $this->get('/projects')->assertRedirect('login');
         $this->get($project->path())->assertRedirect('login');
-
     }
 
     public function test_a_user_can_create_a_project()
@@ -46,9 +45,9 @@ class ProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
 
         $this->get($project->path())
-        ->assertSee($attributes['title'])
-        ->assertSee($attributes['notes'])
-        ->assertSee($attributes['description']);
+            ->assertSee($attributes['title'])
+            ->assertSee($attributes['notes'])
+            ->assertSee($attributes['description']);
     }
 
 
@@ -104,8 +103,8 @@ class ProjectsTest extends TestCase
         $project = Project::factory()->create(['owner_id' => auth()->id()]);
 
         $this->get($project->path())
-        ->assertSee($project->id)
-        ->assertSee($project->title);
+            ->assertSee($project->id)
+            ->assertSee($project->title);
     }
 
     public function test_an_authenticated_user_cannot_view_the_projectes_from_others()

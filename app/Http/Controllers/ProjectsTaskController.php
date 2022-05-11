@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectsTaskController extends Controller
 {
@@ -22,7 +21,7 @@ class ProjectsTaskController extends Controller
 
     public function update(Project $project, Task $task)
     {
-        $this->authorize('update', $project);
+        $this->authorize('update', $task->project);
 
         request()->validate(['body' => 'required']);
 
@@ -32,7 +31,5 @@ class ProjectsTaskController extends Controller
         ]);
 
         return redirect($project->path());
-
-
     }
 }

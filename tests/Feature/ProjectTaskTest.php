@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Task;
 use App\Models\Project;
+use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTaskTest extends TestCase
@@ -54,25 +55,21 @@ class ProjectTaskTest extends TestCase
         $this->post($project->path(). '/task', $attributes)->assertSessionHasErrors('body');
     }
 
-    public function test_a_task_can_be_updated()
+    /** @test */
+    public function a_task_can_be_updated()
     {
         $this->withoutExceptionHandling();
-        $this->signIn();
 
-        $project = auth()->user()->projects()->create(
-            Project::factory()->raw()
-        );
+        $project = ProjectFactory::withTasks(1)->create();
 
-        $task = $project->addTask('test task');
-
-        $this->patch($task->path(), [
-            'body' => 'changed',
-            'completed' => true
-        ]);
+        $this->actingAs($project->owner)
+        ->patch($project->tasks[0]->path(), [
+           'body' => 'changed',
+           'completed' => true
+       ]);
 
         $this->assertDatabaseHas('tasks', [
-            'body' => 'changed',
-            'completed' => true
+            'body' => 'changed'
         ]);
      }
 }
