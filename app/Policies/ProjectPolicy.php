@@ -3,14 +3,15 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Project;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ProjectsPolicy
+class ProjectPolicy
 {
     use HandlesAuthorization;
 
     public function update(User $user, Project $project)
     {
-        return $user->isNot($project->owner);
+        return $user->is($project->owner);
     }
 }

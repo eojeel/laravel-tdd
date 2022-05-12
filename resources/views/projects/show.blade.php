@@ -32,6 +32,7 @@
                         <form action="{{ $project->path() . '/tasks' }}" method="POST">
                             @csrf
                             <input type="text" name="body" class="w-full" placeholder="Add a new task...">
+                        </form>
                     </div>
                 </div>
                 <div class="mb-8">
