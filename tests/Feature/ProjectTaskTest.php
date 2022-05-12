@@ -25,51 +25,66 @@ class ProjectTaskTest extends TestCase
 
         $project = Project::factory()->create();
 
-        $this->post($project->path() . '/tasks', ['title'=> 'twat', 'description' => 'Test task'])
+        $this->post($project->task[0]->path(), ['title' => 'twat', 'description' => 'Test task'])
             ->assertStatus(403);
 
         $this->assertDatabaseMissing('tasks', ['description' => 'Test task']);
     }
 
-    public function test_a_project_can_have_tasks()
+    public function test_only_the_owner_of_a_project_may_uodate_a_tasks()
     {
         $this->signIn();
 
-        $project = Project::factory()->create(['owner_id' => auth()->id()]);
+        $project = ProjectFactory::withTasks(1)->create();
 
-        $this->post($project->path() . '/tasks', ['description' => 'Test task', 'title' => 'test Title']);
+        $this->patch($project->tasks->first()->path(), ['body' => 'changed'])
+            ->assertStatus(403);
 
-        $this->get($project->path())->assertSee('Test task');
+        $this->assertDatabaseMissing('tasks', ['body' => 'changed']);
+    }
+
+    public function test_a_project_can_have_tasks()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = ProjectFactory::create();
+
+        $this->actingAs($project->owner)
+            ->post($project->path() . '/tasks', ['body' => 'Test task']);
+
+        $this->get($project->path())
+            ->assertSee('Test task');
     }
 
     public function test_a_task_requires_a_body()
     {
-        $this->signIn();
+        $this->withExceptionHandling();
 
-        $project = auth()->user()->projects()>create(
-            Project::factory()->raw()
-        );
+        $project = ProjectFactory::create();
 
-        $attributes = Task::factory()->raw(['body' => '']);
+        $attributes = Task::factory()->raw(['body' => ' ']);
 
-        $this->post($project->path(). '/task', $attributes)->assertSessionHasErrors('body');
+        $this->actingAs($project->owner)
+        ->post($project->path() . '/task', $attributes)
+        ->assertSessionHasErrors('body');
     }
 
     /** @test */
     public function a_task_can_be_updated()
     {
-        $this->withoutExceptionHandling();
 
-        $project = ProjectFactory::withTasks(1)->create();
+        $project = ProjectFactory::ownedBy($this->signIn())
+            ->withTasks(1)
+            ->create();
 
         $this->actingAs($project->owner)
-        ->patch($project->tasks[0]->path(), [
-           'body' => 'changed',
-           'completed' => true
-       ]);
+            ->patch($project->tasks[0]->path(), [
+                'body' => 'changed',
+                'completed' => true
+            ]);
 
         $this->assertDatabaseHas('tasks', [
             'body' => 'changed'
         ]);
-     }
+    }
 }

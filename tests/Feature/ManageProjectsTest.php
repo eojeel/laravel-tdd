@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Project;
+use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -24,8 +25,6 @@ class ProjectsTest extends TestCase
 
     public function test_a_user_can_create_a_project()
     {
-        $this->withoutExceptionHandling();
-
         $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
@@ -42,8 +41,6 @@ class ProjectsTest extends TestCase
 
         $response->assertRedirect($project->path());
 
-        $this->assertDatabaseHas('projects', $attributes);
-
         $this->get($project->path())
             ->assertSee($attributes['title'])
             ->assertSee($attributes['notes'])
@@ -55,16 +52,14 @@ class ProjectsTest extends TestCase
     {
         $this->signIn();
 
-        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
 
-        $project = Project::factory()->create(['owner_id' => auth()->id()]);
-
-        $this->patch($project->path(), [
-            'notes' => 'changed'
-        ])->assertRedirect($project->path());
+        $this->ActingAs($project->owner)
+        ->patch($project->path(), $attributes = ['notes' => 'changed'])
+        ->assertRedirect($project->path());
 
         $this->assertDatabaseHas('projects', [
-            'notes' => 'changed'
+            $attributes
         ]);
     }
 
@@ -96,15 +91,12 @@ class ProjectsTest extends TestCase
 
     public function test_a_user_can_view_their_project()
     {
-        $this->withoutExceptionHandling();
+        $project = ProjectFactory::create();
 
-        $this->signIn();
-
-        $project = Project::factory()->create(['owner_id' => auth()->id()]);
-
-        $this->get($project->path())
-            ->assertSee($project->id)
-            ->assertSee($project->title);
+        $this->actingAs($project->owner)
+        ->get($project->path())
+        ->assertSee($project->id)
+        ->assertSee($project->title);
     }
 
     public function test_an_authenticated_user_cannot_view_the_projectes_from_others()
