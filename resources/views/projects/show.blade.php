@@ -2,9 +2,9 @@
     <header class="flex items-center mb-3 py-4">
         <div class="flex justify-between w-full items-end">
             <p class="text-sm text-slate-400 font-normal">
-                <a href="/projects" class="text-sm text-slate-400 font-normal no-underline">My Projects</a> / {{ $project->title }}
+                <a href="/projects" class="text-sm text-slate-400 font-normal no-underline">New Projects</a> / {{ $project->title }}
             </p>
-            <a href="/projects/create" class="text-slate-400 button">My Project</a>
+            <a href="{{ $project->path().'/edit' }}" class="text-slate-400 button">Edit Project</a>
         </div>
     </header>
 

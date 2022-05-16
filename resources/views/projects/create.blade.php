@@ -5,28 +5,19 @@
         </h2>
     </x-slot>
 
+    <div class="lg:w-1/2 lg:mx-auto bg-white p-6 md:py-12 md:px-16 rounded shadow">
+    <form method="POST" action="projects">
 
-    <form method="POST" action="/projects">
-        @csrf
-        <div class="field">
-            <label class="label" for="title">Title</label>
-            <div class="control">
-                <input class="input" type="text" name="title" id="title" value="{{ old('title') }}">
-            </div>
-        </div>
 
-        <div class="field">
-            <label class="label" for="description">Description</label>
-            <div class="control">
-                <textarea class="textarea" name="description" id="description">{{ old('description') }}</textarea>
-            </div>
-        </div>
+    <h2 class="text-2xl font-normal mb-10 text-center">
+           Create a new Project
+        </h2>
+    @include ('projects.form', [
+                'project' => new App\Models\Project,
+                'buttonText' => 'Create Project'
+            ])
 
-        <div class="field">
-            <div class="control">
-                <button type="submit" class="button is-link">Create Project</button>
-                <a href="/projects" class="button is-link">Cancel</a>
-            </div>
-        </div>
+    </form>
+    </div>
 
 </x-app-layout>

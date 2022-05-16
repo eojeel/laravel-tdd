@@ -55,8 +55,10 @@ class ProjectsTest extends TestCase
         $project = ProjectFactory::create();
 
         $this->ActingAs($project->owner)
-        ->patch($project->path(), $attributes = ['notes' => 'changed'])
+        ->patch($project->path(), $attributes = ['title' => 'changed', 'description' => 'changed', 'notes' => 'changed'])
         ->assertRedirect($project->path());
+
+        $this->get($project->path() . '/edit')->assertOk();
 
         $this->assertDatabaseHas('projects', [
             $attributes
