@@ -65,6 +65,19 @@ class ProjectsTest extends TestCase
         ]);
     }
 
+    public function test_a_user_can_update_a_projects_general_notes()
+    {
+        $project = ProjectFactory::create();
+
+        $this->ActingAs($project->owner)
+        ->patch($project->path(), $attributes = ['notes' => 'sosig'])
+        ->assertRedirect($project->path());
+
+        $this->assertDatabaseHas('projects', [
+            $attributes
+        ]);
+    }
+
 
     public function test_a_project_requires_a_title()
     {
@@ -100,6 +113,7 @@ class ProjectsTest extends TestCase
         ->assertSee($project->id)
         ->assertSee($project->title);
     }
+
 
     public function test_an_authenticated_user_cannot_view_the_projectes_from_others()
     {

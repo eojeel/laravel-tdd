@@ -50,12 +50,12 @@ class ProjectsController extends Controller
         return view('projects.edit', compact('project'));
     }
 
-    public function validatefields()
+    protected function validatefields()
     {
         return request()->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'notes' => 'min:3'
+            'title' => 'sometimes|required|max:255',
+            'description' => 'sometimes|required|max:255',
+            'notes' => 'nullable'
         ]);
     }
 }

@@ -41,18 +41,27 @@
                     <form action="{{ $project->path() }}" method="POST">
                         @method('PATCH')
                         @csrf
-                    <textarea name="notes" class="card w-full mb-4" style="min-height:200px" placeholder="Notes">{{ $project->notes }}</textarea>
-                    <button class="button" type="submit">Save</button>
+                        <textarea name="notes" class="card w-full mb-4" style="min-height:200px" placeholder="Notes">{{ $project->notes }}</textarea>
+                        <button class="button" type="submit">Save</button>
                     </form>
-                </div>
-            </div>
 
-            <div class="lg:w-1/4 px-3">
-                <div class="card">
-                    @include('projects.card')
+                    @if ($errors->any())
+                    <div class="field mt-6">
+                        @foreach ($errors->all() as $error)
+                        <li class="text-sm text-red">{{ $error }}</li>
+                        @endforeach
+                    </div>
+                    @endif
+
+                </div>
+
+
+                <div class="lg:w-1/4 px-3">
+                    <div class="card">
+                        @include('projects.card')
+                    </div>
                 </div>
             </div>
-        </div>
     </main>
 
 
