@@ -1,8 +1,16 @@
 <?php
 
+use App\Models\Project;
+use App\Models\Activity;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ProjectsTaskController;
+
+Project::create(function ($project) {
+    Activity::create([
+        'project_id' => $project->id,
+    ]);
+});
 
 /*
 |--------------------------------------------------------------------------
