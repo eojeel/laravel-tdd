@@ -8,11 +8,7 @@ This series will give us a wide range of opportunities to pull up our sleeves an
  ./vendor/bin/sail artisan test
 
 ## Testing
-alias v="./vendor/bin/sail"
-
-v artisan test --filter ***
+sail artisan test --filter ***
 
 ![Screenshot](laravel-tdd.png)
 
-
-https://laracasts.com/series/build-a-laravel-app-with-tdd/episodes/20
