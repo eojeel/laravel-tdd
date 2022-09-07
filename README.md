@@ -13,3 +13,6 @@ alias v="./vendor/bin/sail"
 v artisan test --filter ***
 
 ![Screenshot](laravel-tdd.png)
+
+
+https://laracasts.com/series/build-a-laravel-app-with-tdd/episodes/20

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('project_id');
+            $table->unsignedBigInteger('project_id');
+            $table->string('description');
             $table->timestamps();
-
             $table->foreign('project_id')
                 ->references('id')
                 ->on('projects')
