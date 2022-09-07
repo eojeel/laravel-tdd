@@ -70,12 +70,9 @@ class ManageProjectsTest extends TestCase
         $project = ProjectFactory::create();
 
         $this->ActingAs($project->owner)
-        ->patch($project->path(), $attributes = ['notes' => 'sosig'])
-        ->assertRedirect($project->path());
+        ->patch($project->path(), $attributes = ['notes' => 'sosig']);
 
-        $this->assertDatabaseHas('projects', [
-            $attributes
-        ]);
+        $this->assertDatabaseHas('projects', $attributes);
     }
 
 

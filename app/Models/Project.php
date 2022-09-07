@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Task;
+use App\Models\Activity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Project extends Model
 {
@@ -35,4 +37,14 @@ class Project extends Model
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function recordActivity($type)
+    {
+        Activity::create([
+            'project_id' => $this->id,
+            'description' => $type
+        ]);
+    }
+
+
 }
