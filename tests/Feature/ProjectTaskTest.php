@@ -63,7 +63,7 @@ class ProjectTaskTest extends TestCase
         $attributes = Task::factory()->raw(['body' => '']);
 
         $this->actingAs($project->owner)
-        ->post($project->path() . '/task', $attributes)
+        ->post($project->path() . '/tasks', $attributes)
         ->assertSessionHasErrors('body');
     }
 
