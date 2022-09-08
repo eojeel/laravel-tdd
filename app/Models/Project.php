@@ -13,6 +13,8 @@ class Project extends Model
 
     protected $guarded = [];
 
+    public $old = [];
+
     public function path()
     {
         return "/projects/{$this->id}";
@@ -40,6 +42,13 @@ class Project extends Model
 
     public function recordActivity($description)
     {
-        $this->activity()->create(compact('description'));
+        dd($this->old, $this->toArray());
+        $this->activity()->create([
+            'description' => $description,
+            'changes' => [
+                'before' => [],
+                'after' => $this->toArray()
+            ]
+        ]);
     }
 }

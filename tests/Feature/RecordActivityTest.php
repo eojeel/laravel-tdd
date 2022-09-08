@@ -23,11 +23,22 @@ class RecordActivityTest extends TestCase
     function test_updating_a_project()
     {
         $project = ProjectFactory::create();
+        $origionalTitle = $project->title;
 
         $project->update(['title' => 'Changed']);
 
         $this->assertCount(2, $project->activity);
-        $this->assertEquals('updated', $project->activity->last()->description);
+
+        tap($project->activity->last(), function ($activity) use ($origionalTitle)
+        {
+            $this->assertEquals('updated', $activity->description);
+            $expected = [
+                'before' => ['title' => $origionalTitle],
+                'after' => ['title' => 'Changed'],
+            ];
+
+            $this->assertEquals($expected, $activity->changes);
+        });
     }
 
     function test_creating_a_new_task()
