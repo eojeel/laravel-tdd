@@ -42,13 +42,20 @@ class Project extends Model
 
     public function recordActivity($description)
     {
-        dd($this->old, $this->toArray());
         $this->activity()->create([
             'description' => $description,
-            'changes' => [
-                'before' => [],
-                'after' => $this->toArray()
-            ]
+            'changes' =>  $this->ActivityChanges($description)
         ]);
+    }
+
+    protected function ActivityChanges($description)
+    {
+        if ($description === 'updated')
+        {
+            return [
+                'before' => array_diff( $this->old, $this->getAttributes()),
+                'after' => array_diff($this->getAttributes(), $this->old)
+            ];
+        }
     }
 }
