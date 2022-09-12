@@ -3,16 +3,20 @@
 namespace App\Models;
 
 use App\Models\Project;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+
+    use RecordsActivity;
     use HasFactory;
 
     protected $guarded = [];
     protected $touches = ['project'];
     protected $casts = ['completed' => 'boolean'];
+    protected static $recordableEVENTS = ['created', 'deleted'];
 
     public function incomplete()
     {
@@ -37,19 +41,5 @@ class Task extends Model
     public function path()
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
-    }
-
-
-    public function activity()
-    {
-        return $this->morphMany(Activity::class, 'subject')->latest();
-    }
-
-    public function recordActivity($description)
-    {
-        $this->activity()->create([
-            'project_id' => $this->project_id,
-            'description' => $description
-        ]);
     }
 }
