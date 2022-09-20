@@ -2,7 +2,7 @@
     <x-slot name="header">
     </x-slot>
 
-    <div class="lg:w-1/2 lg:mx-auto bg-white p-6 md:py-12 md:px-16 rounded shadow">
+    <div class="lg:w-1/3 lg:mx-auto bg-white p-6 md:py-12 md:px-16 rounded shadow content-center">
 
         <form method="POST" action="{{ $project->path() }}">
 
@@ -19,4 +19,4 @@
 
     </div>
 
-</x-app-layout>
+ </x-app-layout>

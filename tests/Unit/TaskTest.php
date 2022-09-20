@@ -27,6 +27,8 @@ class TaskTest extends TestCase
 
     function test_it_can_be_completed()
     {
+        $this->withoutExceptionHandling();
+
         $task = Task::factory()->create();
 
         $this->assertFalse($task->completed);

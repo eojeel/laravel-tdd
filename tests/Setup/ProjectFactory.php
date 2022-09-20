@@ -5,13 +5,9 @@ namespace Tests\Setup;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Project;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class ProjectFactory extends TestCase
+class ProjectFactory
 {
-    use RefreshDatabase;
-
     Protected $tasksCount = 0;
     Protected $user;
 

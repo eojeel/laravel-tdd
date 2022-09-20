@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\Project;
 use App\Models\Activity;
 
 trait RecordsActivity
@@ -54,7 +53,7 @@ trait RecordsActivity
             return static::$recordableEvents;
         }
 
-        return ['created', 'updated', 'deleted'];
+        return ['created', 'updated'];
     }
 
     /**
@@ -65,6 +64,7 @@ trait RecordsActivity
     public function recordActivity($description)
     {
         $this->activity()->create([
+            'user_id' => ($this->project ?? $this)->owner->id,
             'description' => $description,
             'changes' => $this->activityChanges(),
             'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id
@@ -95,10 +95,10 @@ trait RecordsActivity
         if ($this->wasChanged()) {
             return [
                 'before' => array_except(
-                    array_diff($this->oldAttributes, $this->getAttributes()), ['updated_at']
+                    array_diff($this->oldAttributes, $this->getAttributes()), 'updated_at'
                 ),
                 'after' => array_except(
-                    $this->getChanges(), ['updated_at']
+                    $this->getChanges(), 'updated_at'
                 )
             ];
         }
