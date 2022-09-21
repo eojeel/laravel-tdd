@@ -73,7 +73,8 @@ class RecordActivityTest extends TestCase
                 'completed' => true
             ]);
 
-        $this->assertCount(3, $project->activity);
+
+        $this->assertCount(5, $project->activity);
 
         tap($project->activity->last(), function ($activity) {
             $this->assertEquals('completed_task', $activity->description);
@@ -91,7 +92,7 @@ class RecordActivityTest extends TestCase
                 'completed' => true
             ]);
 
-        $this->assertCount(3, $project->activity);
+        $this->assertCount(5, $project->activity);
 
         $this->actingAs($project->owner)
             ->patch($project->tasks[0]->path(), [
@@ -101,7 +102,7 @@ class RecordActivityTest extends TestCase
 
         $project = $project->refresh();
 
-        $this->assertCount(4, $project->activity);
+        $this->assertCount(7, $project->activity);
 
         $this->assertEquals('incompleted_task', $project->activity->last()->description);
     }
@@ -112,6 +113,6 @@ class RecordActivityTest extends TestCase
 
         $project->tasks[0]->delete();
 
-        $this->assertCount(3, $project->activity);
+        $this->assertCount(2, $project->activity);
     }
 }

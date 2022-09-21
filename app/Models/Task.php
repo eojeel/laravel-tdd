@@ -14,8 +14,11 @@ class Task extends Model
     use HasFactory;
 
     protected $guarded = [];
+
     protected $touches = ['project'];
+
     protected $casts = ['completed' => 'boolean'];
+
     protected static $recordableEVENTS = ['created', 'deleted'];
 
     public function incomplete()
