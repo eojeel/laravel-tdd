@@ -157,4 +157,16 @@ class ManageProjectsTest extends TestCase
 
         $this->patch($project->path(), [])->assertStatus(403);
     }
+
+    public function test_a_user_can_see_all_projects_they_have_been_invited_it()
+    {
+        $user = $this->signIn();
+
+        $project = ProjectFactory::create();
+
+        $project->invite($user);
+
+        $this->get('/projects')
+            ->assertSee($project->title);
+    }
 }
