@@ -18,9 +18,18 @@ class InvitationsTest extends TestCase
 
         $user = User::factory()->create();
 
-        $this->actingAs($user)
-        ->post($project->path().'/invitations')
-        ->assertStatus(403);
+        $assertInviationForbidden = function () use ($user, $project) {
+            $this->actingAs($user)
+            ->post($project->path().'/invitations')
+            ->assertStatus(403);
+        };
+
+        $assertInviationForbidden();
+
+        $project->invite($user);
+
+        $assertInviationForbidden();
+
     }
 
     public function test_the_invite_email_address_must_be_a_valid_account()
@@ -30,7 +39,7 @@ class InvitationsTest extends TestCase
         $this->actingAs($project->owner)
         ->post($project->path().'/invitations', [
             'email' => 'notauser@example.com'
-        ])->assertSessionHasErrors('email');
+        ])->assertSessionHasErrors('email', null, 'invitations');
 
     }
 

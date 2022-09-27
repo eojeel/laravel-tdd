@@ -10,9 +10,7 @@
     <div class="lg:flex flex-wrap -mx-3">
     @forelse($projects as $project)
     <div class="lg:w-1/3 px-3 pb-6">
-        <div class="card" style="height:200px">
         @include('projects.card')
-        </div>
     </div>
     @empty
         <div>No Projects Yet</div>
