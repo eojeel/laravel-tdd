@@ -1,8 +1,8 @@
 <x-app-layout>
     <header class="flex items-center mb-3 py-4">
         <div class="flex justify-between w-full items-end">
-        <h2 class="text-sm text-slate-400 font-normal">My Projects</h2>
-       <a href="/projects/create" class="text-slate-400 button">My Project</a>
+        <h2 class="text-sm text-default font-normal">My Projects</h2>
+       <a href="/projects/create" class="text-default button">My Project</a>
         </div>
 </header>
 

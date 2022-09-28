@@ -1,4 +1,4 @@
-<div class="card flex flex-col" style="height: 200px">
+<div class="card flex flex-col text-default" style="height: 200px">
     <ul class="text-xs list-reset">
         @foreach($project->activity as $activity)
         <li class="{{ $loop->last ? '' : 'mb-1'}}">

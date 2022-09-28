@@ -3,17 +3,30 @@
 @import 'tailwindcss/utilities';
 
 @layer base {
-    :root {
-        --page-background-color: red;
+    .theme-light {
+        --page-background-color: #F5F6F9;
         --card-background-color: white;
-        --button-background-color: blue;
+        --button-background-color: #47cdff;
+        --nav-background-color: white;
+
+        --text-default-color: text-slate-400;
     }
+    .theme-dark {
+        --page-background-color: #17171E;
+        --card-background-color: #1F2027;
+        --button-background-color: #59B6F9;
+        --nav-background-color: #1F2027;
+
+        --text-default-color:white;
+    }
+
 }
 
 .button {
-    @apply bg-button text-white font-bold py-2 px-4 rounded shadow;
+    @apply bg-button text-default font-bold py-2 px-4 rounded shadow;
 }
 
 .card {
     @apply bg-card p-5 shadow-lg rounded-lg overflow-hidden mb-4;
+    color: text-default;
 }
