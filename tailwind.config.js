@@ -12,6 +12,11 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            backgroundColor: {
+                page: 'var(--page-background-color)',
+                card: 'var(--card-background-color)',
+                button: 'var(--button-background-color)',
+            },
         },
     },
 

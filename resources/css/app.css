@@ -2,10 +2,18 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@layer base {
+    :root {
+        --page-background-color: red;
+        --card-background-color: white;
+        --button-background-color: blue;
+    }
+}
+
 .button {
-    @apply bg-sky-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow;
+    @apply bg-button text-white font-bold py-2 px-4 rounded shadow;
 }
 
 .card {
-    @apply bg-white p-5 shadow-lg rounded-lg overflow-hidden mb-4;
+    @apply bg-card p-5 shadow-lg rounded-lg overflow-hidden mb-4;
 }
