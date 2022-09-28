@@ -1,0 +1,8 @@
+.theme-dark {
+    --page-background-color: #17171E;
+    --card-background-color: #1F2027;
+    --button-background-color: #59B6F9;
+    --nav-background-color: #1F2027;
+
+    --text-default-color:white;
+}
