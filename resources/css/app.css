@@ -6,7 +6,8 @@
 @import 'themes/light-theme.css';
 
 .button {
-    @apply bg-button text-default font-bold py-2 px-4 rounded shadow;
+    @apply bg-button font-bold py-2 px-4 rounded shadow;
+    color: text-default;
 }
 
 .card {

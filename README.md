@@ -12,3 +12,16 @@ sail artisan test --filter ***
 
 ![Screenshot](laravel-tdd.png)
 
+```
+async submit()
+{
+    try {
+        let response = await  axios.post('/projects', this.formData);
+
+        location = location.data.message;
+    } catch (error)
+    {
+        this.errors = error.respone.errors;
+    }
+}
+```
