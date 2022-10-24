@@ -125,6 +125,22 @@ class ManageProjectsTest extends TestCase
         $this->post('/projects', $attributes)->assertRedirect('login');
     }
 
+    public function test_tasks_can_be_includeded_as_part_of_a_new_project()
+    {
+        $this->signIn();
+
+        $attributes = Project::factory()->raw();
+
+        $attributes['tasks'] = [
+            ['body' => 'task 1'],
+            ['body' => 'task 2']
+        ];
+
+        $this->post('/projects', $attributes);
+
+        $this->assertCount(2, Project::first()->tasks);
+    }
+
     public function test_a_user_can_view_their_project()
     {
         $project = ProjectFactory::create();

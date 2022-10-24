@@ -35,14 +35,14 @@
                         </template>
                     </div>
                     <div class="inline-flex items-center">
-                        <button class="mr-2" @click="tasks.push({value: ''})">+</button>
+                        <button type="button" class="mr-2" @click="tasks.push({value: ''})">+</button>
                         <span class="text-xs">Add New Task Field</span>
                     </div>
                 </div>
             </div>
             <footer class="flex justify-end">
+                            <button type="button" class="button" @click="open = false">Cancel</button>
                 <button class="button mr-4" type="submit">Create Project</button>
-                <buttom class="button" @click="open = false">Cancel</buttom>
             </footer>
         </form>
     </div>
